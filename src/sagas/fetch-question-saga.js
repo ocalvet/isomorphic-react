@@ -1,4 +1,4 @@
-import { takeEvery, put } from 'redux-saga/effects'
+import { takeEvery, put, call } from 'redux-saga/effects'
 import fetch from 'isomorphic-fetch';
 
 export default function * () {
@@ -11,9 +11,11 @@ export default function * () {
 /**
  * Fetch question details from the local proxy API
  */
-function * handleFetchQuestion ({question_id}) {
+export function * handleFetchQuestion ({question_id}) {
     const raw = yield fetch(`/api/questions/${question_id}`);
+    // console.log('RAW', raw);
     const json = yield raw.json();
+    // console.log('JSON', json);
     const question = json.items[0];
     /**
      * Notify application that question has been fetched
